@@ -1,3 +1,4 @@
 # RL_pytorch
 Reinforcement learning built by PyTorch<br>
-DQN first<br>
+Require open AI gym and numpy<br>
+
