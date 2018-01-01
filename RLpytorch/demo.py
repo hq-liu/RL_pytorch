@@ -22,22 +22,52 @@ class deep_q_network(nn.Module):
 
         # build the net
         self.input = nn.Linear(in_features=self.state_dim, out_features=self.hidden_size)  # 输入
-        self.hidden_layers = {}  # 隐藏层
-        # for i in range(self.n_layers):
-        self.hidden_layers[1] = nn.Linear(in_features=self.hidden_size,
-                                                   out_features=self.hidden_size)
+        self.hidden_layers = nn.ModuleList([nn.Linear(in_features=hidden_size,
+                                                      out_features=hidden_size) for i in range(n_layers)])
         self.output = nn.Linear(in_features=self.hidden_size, out_features=self.action_dim)  # 输出
 
     def forward(self, x):
         x = F.relu(self.input(x))
-        # for i in range(self.n_layers):
-        x = F.relu(self.hidden_layers[1](x))
+        x = F.relu(self.hidden_layers(x))
         x = self.output(x)
         return x
 
 
-model = deep_q_network(3,2,3,50).cuda()
-print(model)
+a = np.array([ 0.5308,
+ 0.5316,
+ 0.5327,
+ 0.5339,
+ 0.5345,
+ 0.4654,
+ 0.4656,
+ 0.5338,
+ 0.4656,
+ 0.4662,
+ 0.4670,
+ 0.5317,
+ 0.5331,
+ 0.4660,
+ 0.4667,
+ 0.5323,
+ 0.5335,])
+b = np.array([ 0.5308,
+ 0.5316,
+ 0.5327,
+ 0.5339,
+ 0.5345,
+ 0.4654,
+ 0.4656,
+ 0.5338,
+ 0.4656,
+ 0.4662,
+ 0.4670,
+ 0.5317,
+ 0.5331,
+ 0.4660,
+ 0.4667,
+ 0.5323,
+ 0.5335,])
+print(a.dot(b.T))
 # a = np.array(range(15)).reshape((5,3))
 # a = torch.from_numpy(a)
 # a = Variable(a).type(torch.cuda.FloatTensor)
